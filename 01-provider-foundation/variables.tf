@@ -73,3 +73,48 @@ variable "org_display_name" {
   description = "Organization display name"
   default     = "Landing Zone Blue"
 }
+
+variable "oidc_enabled" {
+  type        = bool
+  description = "Enable OIDC for the organization"
+  default     = true
+}
+
+variable "oidc_client_id" {
+  type        = string
+  description = "OIDC client ID"
+  sensitive   = true
+}
+
+variable "oidc_client_secret" {
+  type        = string
+  description = "OIDC client secret"
+  sensitive   = true
+}
+
+variable "oidc_wellknown_endpoint" {
+  type        = string
+  description = "OIDC well-known endpoint"
+}
+
+variable "tenant_admin_password" {
+  type        = string
+  description = "Password for the initial local organization administrator"
+  sensitive   = true
+}
+
+variable "project_name" {
+  type        = string
+  description = "VCF Automation project used for the Supervisor Namespace"
+  default     = "default-project"
+}
+
+variable "vpc_name" {
+  type        = string
+  description = "VCF Automation VPC used for the Supervisor Namespace"
+  default     = null
+}
+
+locals {
+  namespace_vpc_name = coalesce(var.vpc_name, "default-${var.region_name}")
+}
