@@ -5,10 +5,10 @@ data "vcfa_storage_class" "content_storage" {
 
 resource "vcfa_content_library" "tenant_blue" {
   org_id           = vcfa_org.lz.id
-  name             = "${var.org_name}-library"
-  description      = "${var.org_display_name} content library"
-  auto_attach      = false
-  delete_recursive = true
+  name             = local.content_library_name
+  description      = local.content_library_description
+  auto_attach      = var.content_library_auto_attach
+  delete_recursive = var.content_library_delete_recursive
 
   storage_class_ids = [
     data.vcfa_storage_class.content_storage.id

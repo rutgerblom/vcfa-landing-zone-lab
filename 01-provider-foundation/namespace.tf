@@ -11,24 +11,24 @@ provider "kubernetes" {
 resource "vcfa_supervisor_namespace" "payments_dev" {
   provider = vcfa.tenant_blue
 
-  name_prefix  = "payments-dev"
-  project_name = "default-project"
-  class_name   = "small"
-  description  = "Payments development namespace"
+  name_prefix  = var.supervisor_namespace.name_prefix
+  project_name = var.project_name
+  class_name   = var.supervisor_namespace.class_name
+  description  = var.supervisor_namespace.description
 
   region_name = data.vcfa_region.region.name
-  vpc_name    = "default-eu-north-1"
+  vpc_name    = local.namespace_vpc_name
 
   storage_classes_class_config_overrides {
     name  = var.storage_policy_name
-    limit = "100Gi"
+    limit = var.supervisor_namespace.storage_limit
   }
 
   zones_class_config_overrides {
     name               = var.region_zone_name
-    cpu_limit          = "4000M"
-    cpu_reservation    = "0M"
-    memory_limit       = "8192Mi"
-    memory_reservation = "0Mi"
+    cpu_limit          = var.supervisor_namespace.cpu_limit
+    cpu_reservation    = var.supervisor_namespace.cpu_reservation
+    memory_limit       = var.supervisor_namespace.memory_limit
+    memory_reservation = var.supervisor_namespace.memory_reservation
   }
 }

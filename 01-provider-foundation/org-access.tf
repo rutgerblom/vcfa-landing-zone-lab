@@ -1,11 +1,11 @@
 data "vcfa_role" "org_admin" {
   org_id = vcfa_org.lz.id
-  name   = "Organization Administrator"
+  name   = var.tenant_admin_role_name
 }
 
 resource "vcfa_org_local_user" "tenant_admin" {
   org_id   = vcfa_org.lz.id
-  username = "tenant-admin"
+  username = var.tenant_admin_username
   password = var.tenant_admin_password
 
   role_ids = [
